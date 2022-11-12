@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext, useState } from "react";
+import { Link, Route, Routes } from "react-router-dom";
+import EmployeeAdd from "./components/employeeAdd/EmployeeAdd";
+import Counter from "./components/employeeList/counter/Counter";
+import EmployeeList from "./components/employeeList/EmployeeList";
+import EmployeeUpdate from "./components/employeeUpdate/EmployeeUpdate";
+import AppContext from "./context/AppContext";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const { appName, employees, setList, selectedEmployee, setSelectedEmployee } = useContext(AppContext);
+  return <div>
+    <h1>{appName}</h1>
+
+    <ul>
+      <li> <Link to="/">Home</Link> </li>
+      <li> <Link to="/employees">Employees</Link> </li>
+      <li> <Link to="/employees/add">Add Employee</Link> </li>
+      <li> <Link to="/counter">Counter</Link> </li>
+    </ul>
+
+    <Routes>
+      <Route path="/employees" element={<EmployeeList />} />
+      <Route path="/employees/add" element={<EmployeeAdd />} />
+      <Route path="/employees/update/:id" element={<EmployeeUpdate />} />
+      <Route path="/counter" element={<Counter />} />
+    </Routes>
+
+  </div>;
+
 }
 
 export default App;
